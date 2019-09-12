@@ -4,4 +4,4 @@ This example uses Pure CSS and Vanilla JS to create a popup with image thumbnail
 
 Please find demo below
 
-
+![](img/simple-images-modal-demo.gif)
