@@ -2,6 +2,12 @@
 
 This example uses Pure CSS and Vanilla JS to create a popup with image thumbnails and image selectors.
 
-#### Demo
+#### Simple One Model Demo
 
 ![](img/simple-images-modal-demo.gif)
+
+
+
+#### Multiple Models Dynamic Demo
+
+![](img/multiple-popups-dynamic.gif)
