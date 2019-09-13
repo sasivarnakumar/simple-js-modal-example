@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <style>
+    body,
+    html {
+        overflow-x: hidden !important;
+    }
+
     .popup {
         position: fixed;
         top: 0;
@@ -17,11 +22,11 @@
         display: flex;
         flex-direction: column;
         z-index: 999;
-        background-image: linear-gradient(141deg,#dfd8d9 0,#f5f5f5 71%,#fff 100%);
+        background-image: linear-gradient(141deg, #dfd8d9 0, #f5f5f5 71%, #fff 100%);
         display: none;
     }
 
-    .popup .popup__images { 
+    .popup .popup__images {
 
         position: absolute;
         overflow: hidden;
@@ -29,19 +34,19 @@
         display: flex;
         flex-direction: column;
         transition: 0.5s top ease-in-out;
-        
+
 
     }
 
     .popup .popup__images .popup__images__wrap {
-        height: 100vh;
+        /* height: 100vh; */
         width: 100%;
         text-align: center;
         position: relative;
     }
 
     .popup .popup__images .popup__images__wrap img {
-        max-height: 100vh;
+        max-height: 80vh;
         max-width: 100%;
         display: inline-block;
         position: relative;
@@ -79,7 +84,9 @@
         opacity: 0;
 
     }
-    .popup .popup__thumbs .popup__thumbs__wrap::before, .popup .popup__thumbs .popup__thumbs__wrap::after {
+
+    .popup .popup__thumbs .popup__thumbs__wrap::before,
+    .popup .popup__thumbs .popup__thumbs__wrap::after {
 
         content: '';
         position: absolute;
@@ -89,6 +96,7 @@
         transition: 0.3s opacity;
 
     }
+
     .popup .popup__thumbs .popup__thumbs__wrap::before {
 
         height: 100%;
@@ -107,10 +115,10 @@
 
     }
 
-    .popup .popup__thumbs .popup__thumbs__wrap img{
+    .popup .popup__thumbs .popup__thumbs__wrap img {
         max-width: 80px;
     }
-    
+
     /* close button */
     .popup .popup__close {
         position: absolute;
@@ -119,7 +127,7 @@
         height: 3rem;
         width: 3rem;
         background: transparent url("img/icon-close-black.svg") center no-repeat;
-            background-size: auto;
+        background-size: auto;
         background-size: 2.5rem;
         border: none;
         z-index: 6;
@@ -127,103 +135,165 @@
         transition: 0.3s opacity;
     }
 
+    p.popup-para {
+        text-align: left !important;
+        color: black;
+        font-size: 16px;
+        padding: 2% 17%;
+    }
+
+    .pop-up-heading {
+        font-size: 24px;
+        color: #ff3860;
+        font-weight: 500;
+    }
+
+
+    @media (max-width: 768px) {
+
+        .popup .popup__thumbs {
+            display: -webkit-box;
+            padding: 76% 0px 0px 20px;
+            height: 69vh;
+        }
+
+        .popup .popup__wrapper {
+            position: absolute;
+            z-index: 6;
+            left: 9%;
+            transform: unset;
+            bottom: 0;
+        }
+
+        .title.is-2 {
+            font-size: 23px;
+        }
+
+        .title.is-1 {
+            font-size: 25px;
+        }
+
+        .popup__thumbs .popup__thumbs__wrap img {
+            max-width: 55px !important;
+        }
+
+        .popup .popup__thumbs .popup__thumbs__wrap {
+            height: 3.5rem;
+            width: 66px;
+
+        }
+
+        p.popup-para {
+
+            padding: 1% 4%;
+        }
+
+        img.popup-image {
+            position: fixed;
+        }
+
+        .popup .popup__images .popup__images__wrap {
+            height: unset;
+        }
+    }
+
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+        .popup .popup__thumbs {
+            padding: 100% 0px 0px 20px !important;
+        }
+
+        .popup .popup__wrapper {
+            left: 30%;
+        }
+
+        .popup .popup__images .popup__images__wrap img {
+            max-height: 70vh;
+
+        }
+
+    }
     </style>
     <script>
+    function openPopup() {
+        // just toggle the display none prop
+        var pop = document.getElementById("popup");
+        pop.style.display = "block";
+        pop.style.overflow = "scroll";
+    }
 
-        function openPopup(){
-            // just toggle the display none prop
-            var pop = document.getElementById("popup");
-            pop.style.display = "block";
-        }
+    function closePopup() {
+        // just toggle the display none prop
+        var pop = document.getElementById("popup");
+        pop.style.display = "none";
+    }
 
-        function closePopup(){
-            // just toggle the display none prop
-            var pop = document.getElementById("popup");
-            pop.style.display = "none";
-        }
-
-        function changeImage( obj ){
-            var target = document.getElementById("target-image");
-            // console.log(obj);
-            target.src = obj.dataset.src;
-        }
+    function changeImage(obj) {
+        var target = document.getElementById("target-image");
+        // console.log(obj);
+        target.src = obj.dataset.src;
+    }
     </script>
 </head>
 
 <body>
-
     <section class="hero is-light is-bold is-fullheight">
-      <div class="hero-body">
-        <div class="container">
-         <h1 class="title is-1"> Welcome to Simplest Popup with no extra fuss! </h1>
-
-        <h2 class="title is-2">  Something is better than nothing </h2>
-
-        <span> Well you are now awesome since you started writing Code :D </span>
-        <br>
-        <br>
-
-        <button class="button is-large is-danger is-rounded" onclick="openPopup();">See my lil secret!</button>
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-1"> Welcome to Simplest Popup with no extra fuss! </h1>
+                <h2 class="title is-2"> Something is better than nothing </h2>
+                <span> Well you are now awesome since you started writing Code :D </span>
+                <br>
+                <br>
+                <button class="button is-large is-danger is-rounded" onclick="openPopup();">See my lil secret!</button>
+            </div>
         </div>
-      </div>
-      <div class="hero-foot">
-        <div class="content has-text-centered">
-        <p>
-            <span class="has-text-grey"> Image credits : <a target="_blank" href="https://unsplash.com">Unsplash</a>  </span>
-        </p>
-        <p>
-          <strong>Simple Popup</strong> by <a href="https://tealorca.com">Teal Orca Web Agency</a>. The source code is licensed
-          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. 
-        </p>
-        <br><br>
-      </div>
-          
-      </div>
+        <div class="hero-foot">
+            <div class="content has-text-centered">
+                <p>
+                    <span class="has-text-grey"> Image credits : <a target="_blank" href="https://unsplash.com">Unsplash</a> </span>
+                </p>
+                <p>
+                    <strong>Simple Popup</strong> by <a href="https://tealorca.com">Teal Orca Web Agency</a>. The source code is licensed
+                    <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+                </p>
+                <br><br>
+            </div>
+        </div>
     </section>
-        
     <section class="popup popup--active " id="popup">
-        
         <button class="popup__close " onclick="closePopup()"></button>
-
         <div style="top: 0px; " class="popup__images">
             <div class="popup__images__wrap ">
-                <img id="target-image"  class=" ls-is-cached lazyloaded" 
-                src="img/img1.jpg">
+                <img id="target-image" class=" ls-is-cached lazyloaded" src="img/img1.jpg">
+                <div class="popup-content">
+                    <h1 class="pop-up-heading">Gary Vee Quotes</h1>
+                    <div class="popup-para"> “Love your family, work super hard, live your passion.” <br>
+                        “It took thirty-eight years before 50 million people gained access to radios. It took television thirteen years to earn an audience that size. It took Instagram a year and a half.” <br>
+                        “life shrinks and expands on the proportion of your willingness to take risks and try new things.” <br>
+                        “I put zero weight into anyone’s opinion about me because I know exactly who I am. Can you say the same? When” <br>
+                        “Stop focusing on dumb shit. Don’t be afraid to break things. Don’t be romantic. Don’t take the time to breathe. Don’t aim for perfect. And whatever you do, keep moving. Reread this a few times . . .” </div>
+                </div>
             </div>
         </div>
         <div class="popup__wrapper ">
             <div class="popup__thumbs">
-                <div class="popup__thumbs__wrap--active popup__thumbs__wrap" id="zimage-1"
-                data-src="img/img1.jpg"
-                onclick="changeImage(this);" 
-                >
-
-                    <img src="img/img1.jpg">
+                <div class="popup__thumbs__wrap--active popup__thumbs__wrap" id="zimage-1" data-src="img/img1.jpg" onclick="changeImage(this);">
+                    <img src="img/img1.jpg" class="popup-image">
                 </div>
-                
-                <div class="popup__thumbs__wrap" id="zimage-2"
-                data-src="img/img2.jpg" 
-                onclick="changeImage(this);" >
-                    <img src="img/img2.jpg">
+                <div class="popup__thumbs__wrap" id="zimage-2" data-src="img/img2.jpg" onclick="changeImage(this);">
+                    <img src="img/img2.jpg" class="popup-image">
                 </div>
-
-                <div class="popup__thumbs__wrap" id="zimage-3"
-                data-src="img/img3.jpg" 
-                onclick="changeImage(this);" >
-                    <img src="img/img3.jpg">
+                <div class="popup__thumbs__wrap" id="zimage-3" data-src="img/img3.jpg" onclick="changeImage(this);">
+                    <div class="pop-div">
+                        <img src="img/img3.jpg" class="popup-image">
+                    </div>
                 </div>
-
-                <div class="popup__thumbs__wrap" id="zimage-4"
-                data-src="img/img4.jpg" 
-                onclick="changeImage(this);" >
-                    <img src="img/img4.jpg">
+                <div class="popup__thumbs__wrap" id="zimage-4" data-src="img/img4.jpg" onclick="changeImage(this);">
+                    <img src="img/img4.jpg" class="popup-image">
                 </div>
-                
-
             </div>
         </div>
     </section>
-
 </body>
 
 </html>
