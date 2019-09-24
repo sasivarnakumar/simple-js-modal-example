@@ -348,8 +348,6 @@
             pop_imgs[2]=obj.dataset.img3;
             pop_imgs[3]=obj.dataset.img4;
 
-            
-
             console.log(pop_imgs);
             console.log(curr_index);
 
@@ -367,16 +365,58 @@
         }
 
         function moveLeft(){
+            
+            if (curr_index >=1) {
+                
+                document.getElementById("target-image").src='../img/spinner.gif';
 
-            var img1=new Image();
-            img1.src=obj.dataset.img1;
-            img1.onload=function(){
-               document.getElementById("target-image").src=obj.dataset.img1;
-               document.getElementById("target-image").style.opacity=1;
-            }pop_imgs[ curr_index-1 ];
+                var img1=new Image();
+                img1.src=pop_imgs[ curr_index ];
+                img1.onload=function(){
+                   document.getElementById("target-image").src=pop_imgs[ curr_index ];
+                   document.getElementById("target-image").style.opacity=1;
+                   console.log(pop_imgs[ curr_index ]);
+                }
 
-            document.getElementById("target-image").src='../img/spinner.gif';
+                curr_index -= 1;    
+            }
+            adjust_arrows();
+        }
 
+        function moveRight(){
+            
+            if (curr_index < pop_imgs.length-1) {
+
+                document.getElementById("target-image").src='../img/spinner.gif';
+
+                var img1=new Image();
+                img1.src=pop_imgs[ curr_index ];
+                img1.onload=function(){
+                   document.getElementById("target-image").src=pop_imgs[ curr_index ];
+                   document.getElementById("target-image").style.opacity=1;
+                   console.log(pop_imgs[ curr_index ]);
+                }
+            
+                curr_index += 1;    
+            }
+            
+            adjust_arrows();
+
+        }
+
+        function adjust_arrows(){
+            console.log(curr_index);
+            if (curr_index ==0) {
+                document.getElementById("left-arrow").style.opacity=0.4;
+            }else{
+                document.getElementById("left-arrow").style.opacity=1;
+            }
+
+            if (curr_index == pop_imgs.length-1) {
+                document.getElementById("right-arrow").style.opacity=0.4;
+            }else{
+                document.getElementById("right-arrow").style.opacity=1;
+            }
         }
 
         function closePopup(){
@@ -386,12 +426,6 @@
             document.getElementById("target-image").src='../img/spinner.gif';
 
             pop.style.display = "none";
-        }
-
-        function changeImage( obj ){
-            var target = document.getElementById("target-image");
-            // console.log(obj);
-            target.src = obj.dataset.src;
         }
     </script>
 </head>
@@ -462,10 +496,10 @@
 
         <div style="top: 0px; " class="popup__images">
             <div class="popup__images__wrap ">
-                  <div class="left-arrow"><img src="../img/left-arrow.svg"/> </div>
+                  <div id="left-arrow" class="left-arrow" onclick="moveLeft()"><img src="../img/left-arrow.svg"/> </div>
                   <img id="target-image"  class=" ls-is-cached lazyloaded" 
                   src="../img/img1.jpg">
-                  <div class="right-arrow"><img src="../img/right-arrow.svg" /> </div>
+                  <div id="right-arrow"  class="right-arrow" onclick="moveRight()"><img src="../img/right-arrow.svg" /> </div>
             </div>
         </div>
     </section>
