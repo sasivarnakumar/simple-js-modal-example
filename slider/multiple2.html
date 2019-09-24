@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multiple Dynamic Popup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+
+    <style>
+      /*
+       Spezific styling for salvattore
+       Feel free to edit it as you like
+       More info at http://salvattore.com
+     */
+
+    /* Base styles */
+    .column {
+        float: left;
+    }
+    .size-1of4 {
+        width: 25%;
+    }
+    .size-1of3 {
+        width: 33.333%;
+    }
+    .size-1of2 {
+        width: 50%;
+    }
+
+    /* Configurate salvattore with media queries */
+    @media screen and (max-width: 450px) {
+        #timeline[data-columns]::before {
+            content: '1 .column';
+        }
+    }
+
+    @media screen and (min-width: 451px) and (max-width: 700px) {
+        #timeline[data-columns]::before {
+            content: '2 .column.size-1of2';
+        }
+    }
+
+    @media screen and (min-width: 701px) and (max-width: 850px) {
+        #timeline[data-columns]::before {
+            content: '3 .column.size-1of3';
+        }
+    }
+
+    @media screen and (min-width: 851px) {
+        #timeline[data-columns]::before {
+            content: '3 .column.size-1of3';
+        }
+    }
+    /*mystyles*/
+
+    .size-1of4 {
+        padding: 30px;
+    }
+    .item {
+        padding: 20px 45px !important;
+        margin: 50px 0px;
+    }
+    .item h2 {
+        color: #545454;
+        font-style: italic;
+        text-align: center;
+        font-weight: 500;
+        padding-top:25px;
+    }
+    .text-h2{
+        text-transform: capitalize;
+        font-size: 19px;
+    }
+    .item p {
+        color: #A1874B;
+        text-align: center;
+        background:unset;
+        margin:0 !important;
+        padding:0 !important;
+    }
+    .border-unset:hover{
+        text-decoration: unset;
+    }
+    </style>
+
+    <style>
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        z-index: 999;
+        background-image: linear-gradient(141deg,#fff 0,#fff 71%,#fff 100%);
+        display: none;
+
+    }
+
+    .popup .popup__images { 
+
+        position: absolute;
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: 0.5s top ease-in-out;
+        top:80px;
+
+    }
+
+    .popup .popup__images .popup__images__wrap {
+        /*height: 100vh;*/
+        width: 100%;
+        text-align: center;
+        position: relative;
+    }
+
+    .popup .popup__images .popup__images__wrap img {
+        max-height: 80vh;
+        max-width: 100%;
+        display: inline-block;
+        position: relative;
+        z-index: 2;
+        opacity: 1;
+    }
+  
+    #target-image{
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .popup .popup__wrapper {
+
+        position: fixed;
+        z-index: 6;
+        top: 50%;
+        left: 3rem;
+        transform: translateY(-50%);
+
+    }
+
+    .popup .popup__thumbs {
+
+        display: flex;
+        flex-direction: column;
+        display: block;
+        padding: 1rem;
+        max-height: 46.2rem;
+        overflow: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+    }
+
+    .popup .popup__thumbs .popup__thumbs__wrap::after {
+
+        height: 0.5rem;
+        background: #000;
+        opacity: 0;
+
+    }
+    .popup .popup__thumbs .popup__thumbs__wrap::before, .popup .popup__thumbs .popup__thumbs__wrap::after {
+
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        transition: 0.3s opacity;
+
+    }
+    .popup .popup__thumbs .popup__thumbs__wrap::before {
+
+        height: 100%;
+        border: 1px solid #000;
+        opacity: 0;
+
+    }
+
+    .popup .popup__thumbs .popup__thumbs__wrap {
+
+        width: 5.5rem;
+        margin: 0 0 1rem;
+        position: relative;
+        height: 6.5rem;
+        cursor: pointer;
+
+    }
+
+    .popup .popup__thumbs .popup__thumbs__wrap img{
+        max-width: 80px;
+        box-shadow: 5px 10px 8px #888888;
+    }
+    
+    /* close button */
+/*     .popup .popup__close {
+        position: absolute;
+        top: 3.5rem;
+        right: 3.5rem;
+        height: 3rem;
+        width: 3rem;
+        background-size: 2.5rem;
+        border: none;
+        z-index: 6;
+        cursor: pointer;
+        transition: 0.3s opacity;
+    } */
+  
+   /* close button */
+    .popup .popup__close {
+        position: absolute;
+        top: 4.5rem;
+        right: 6rem;
+        height: 2rem;
+        width: 2rem;
+        background-size: 50%;
+        z-index: 6;
+        cursor: pointer;
+        transition: 0.3s opacity;
+        border: 1px solid #ddd;
+        border-radius: 100px;
+        padding: 20px;
+    }
+    
+    .popup-content{
+      max-width:950px
+    }
+  
+  .right-arrow, .left-arrow{
+    display:inline;
+  }
+    .right-arrow img,.left-arrow img{
+      height: 30px;
+      cursor: pointer;
+}
+  .hide-this{ display:none;}
+    
+  
+    p.popup-para {
+        text-align: left !important;
+        color: black;
+        font-size: 16px;
+        padding: 2% 17%;
+    }
+
+    .pop-up-heading {
+        font-size: 24px;
+        color: #ff3860;
+        font-weight: 500;
+    }
+
+
+    @media (max-width: 767px) {
+      .popup .popup__close {
+        top: 4rem;
+        right: 2rem;
+      }
+      .popup .popup__images { 
+        top:40px;
+      }
+      .popup .popup__images .popup__images__wrap img{
+        margin-top:70px;
+      }
+        .popup .popup__thumbs {
+            display: -webkit-box;
+            padding: 80% 0px 0px 20px;
+            height: 69vh;
+        }
+
+        .popup .popup__wrapper {
+            position: absolute;
+            z-index: 6;
+            left: 9%;
+            transform: unset;
+            bottom: 0;
+        }
+
+        .title.is-2 {
+            font-size: 23px;
+        }
+
+        .title.is-1 {
+            font-size: 25px;
+        }
+
+        .popup__thumbs .popup__thumbs__wrap img {
+            max-width: 55px !important;
+        }
+
+        .popup .popup__thumbs .popup__thumbs__wrap {
+            height: 3.5rem;
+            width: 66px;
+
+        }
+
+        p.popup-para {
+
+            padding: 1% 4%;
+        }
+
+        img.popup-image, span.popup-image {
+            position: fixed;
+        }
+
+        .popup .popup__images .popup__images__wrap {
+            height: unset;
+        }
+      #target-image{
+        width: 80%;
+      }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        .popup .popup__thumbs {
+            padding: 100% 0px 0px 20px !important;
+        }
+
+        .popup .popup__wrapper {
+            left: 30%;
+            top: 90%;
+        }
+
+        .popup .popup__images .popup__images__wrap img {
+            max-height: 70vh;
+
+        }
+
+    }
+
+    </style>
+    <script>
+        
+        var pop_imgs=[];
+        var curr_index=0;
+
+        function openPopup(obj){
+            // just toggle the display none prop
+
+            document.getElementById("target-image").src='../img/spinner.gif';
+
+            pop_imgs[0]=obj.dataset.img1;
+            pop_imgs[1]=obj.dataset.img2;
+            pop_imgs[2]=obj.dataset.img3;
+            pop_imgs[3]=obj.dataset.img4;
+
+            
+
+            console.log(pop_imgs);
+            console.log(curr_index);
+
+            var pop = document.getElementById("popup");
+            pop.style.display = "block";
+
+            // set the first image
+            var img1=new Image();
+            img1.src=obj.dataset.img1;
+            img1.onload=function(){
+               document.getElementById("target-image").src=obj.dataset.img1;
+               document.getElementById("target-image").style.opacity=1;
+            } 
+
+        }
+
+        function moveLeft(){
+
+            var img1=new Image();
+            img1.src=obj.dataset.img1;
+            img1.onload=function(){
+               document.getElementById("target-image").src=obj.dataset.img1;
+               document.getElementById("target-image").style.opacity=1;
+            }pop_imgs[ curr_index-1 ];
+
+            document.getElementById("target-image").src='../img/spinner.gif';
+
+        }
+
+        function closePopup(){
+            // just toggle the display none prop
+            var pop = document.getElementById("popup");
+           
+            document.getElementById("target-image").src='../img/spinner.gif';
+
+            pop.style.display = "none";
+        }
+
+        function changeImage( obj ){
+            var target = document.getElementById("target-image");
+            // console.log(obj);
+            target.src = obj.dataset.src;
+        }
+    </script>
+</head>
+ 
+<body>
+
+    <section class="hero is-light is-bold is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+         <h1 class="title is-1"> Welcome to Simplest Popup with no extra fuss! </h1>
+
+        <h2 class="title is-2">  More than something </h2>
+
+        <span> Well you are now awesome since you started writing Code :D </span>
+        <br>
+        <br>
+
+        <button class="button is-large is-danger is-rounded" onclick="openPopup(this);"
+            data-img1="../img/img1.jpg"
+            data-img2="../img/img2.jpg"
+            data-img3="../img/img3.jpg"
+            data-img4="../img/img4.jpg"
+        >
+            See my lil secret!
+        </button>
+
+        <button class="button is-large is-danger is-rounded" onclick="openPopup(this);"
+            data-img1="../img/img3.jpg"
+            data-img2="../img/img4.jpg"
+            data-img3="../img/img1.jpg"
+            data-img4="../img/img2.jpg"
+            
+        >
+            And Another !
+        </button>
+
+        <button class="button is-large is-danger is-rounded" onclick="openPopup(this);"
+            data-img1="https://source.unsplash.com/user/alexmotoc/900x1200"
+            data-img2="https://source.unsplash.com/user/erondu/900x1200"
+            data-img3="https://source.unsplash.com/user/boiiii27/900x1200"
+            data-img4="https://source.unsplash.com/random/900x1200"
+        >
+            Unsplashed!
+        </button>
+       
+        </div>
+      </div>
+      <div class="hero-foot">
+        <div class="content has-text-centered">
+        <p>
+            <span class="has-text-grey"> Image credits : <a target="_blank" href="https://unsplash.com">Unsplash</a>  </span>
+        </p>
+        <p>
+          <strong>Simple Popup</strong> by <a href="https://tealorca.com">Teal Orca Web Agency</a>. The source code is licensed
+          <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. 
+        </p>
+        <br><br>
+      </div>
+          
+      </div>
+    </section>
+        
+    <section class="popup popup--active " id="popup">
+        
+        <button class="popup__close " 
+        style="background: transparent url('../img/icon-close-black.svg') center no-repeat;background-size: auto;"
+        onclick="closePopup()"></button>
+
+        <div style="top: 0px; " class="popup__images">
+            <div class="popup__images__wrap ">
+                  <div class="left-arrow"><img src="../img/left-arrow.svg"/> </div>
+                  <img id="target-image"  class=" ls-is-cached lazyloaded" 
+                  src="../img/img1.jpg">
+                  <div class="right-arrow"><img src="../img/right-arrow.svg" /> </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>
+
+
