@@ -347,6 +347,7 @@
             pop_imgs[1]=obj.dataset.img2;
             pop_imgs[2]=obj.dataset.img3;
             pop_imgs[3]=obj.dataset.img4;
+            curr_index=0;
 
             console.log(pop_imgs);
             console.log(curr_index);
@@ -368,7 +369,7 @@
             
             if (curr_index >=1) {
                 
-                document.getElementById("target-image").src='../img/spinner.gif';
+                // document.getElementById("target-image").src='../img/spinner.gif';
 
                 var img1=new Image();
                 img1.src=pop_imgs[ curr_index ];
@@ -387,7 +388,7 @@
             
             if (curr_index < pop_imgs.length-1) {
 
-                document.getElementById("target-image").src='../img/spinner.gif';
+                // document.getElementById("target-image").src='../img/spinner.gif';
 
                 var img1=new Image();
                 img1.src=pop_imgs[ curr_index ];
